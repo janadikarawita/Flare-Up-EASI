@@ -8,16 +8,19 @@ flare_model = joblib.load('flare_prediction_model.pkl')  # Model for predicting 
 
 # App title
 st.title("EASI Score and Flare-Up Prediction Tool")
-st.write("Predict future EASI scores and flare-ups based on previous EASI and ERC values.")
+st.write("Predict future EASI scores and flare-ups based on previous blood marker values.")
 
-# Input fields
-previous_easi = st.number_input("Previous EASI Score:", min_value=0.0, step=0.1)
-previous_erc = st.number_input("Previous ERC Value (normalized):", min_value=0.0, max_value=1.0, step=0.01)
+# Input fields for all required features
+age = st.number_input("Age (normalized between 0 and 1):", min_value=0.0, max_value=1.0, step=0.01)
+erc = st.number_input("Eosinophil Relative Count (ERC, normalized):", min_value=0.0, max_value=1.0, step=0.01)
+nlr = st.number_input("Neutrophil-to-Lymphocyte Ratio (NLR, normalized):", min_value=0.0, max_value=1.0, step=0.01)
+blr = st.number_input("Basophil-to-Lymphocyte Ratio (BLR, normalized):", min_value=0.0, max_value=1.0, step=0.01)
+elr = st.number_input("Eosinophil-to-Lymphocyte Ratio (ELR, normalized):", min_value=0.0, max_value=1.0, step=0.01)
 
 # Predict button
 if st.button("Predict"):
     # Prepare input for prediction
-    input_data = np.array([[previous_easi, previous_erc]])
+    input_data = np.array([[age, erc, nlr, blr, elr]])
 
     # Predict future EASI score
     predicted_easi = easi_model.predict(input_data)
