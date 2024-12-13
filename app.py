@@ -35,3 +35,29 @@ if st.button("Predict"):
         st.write(f"Future Flare-Up Risk: {flare_risk}")
     except ValueError as e:
         st.error(f"An error occurred during prediction: {e}")
+import pandas as pd
+
+# Prepare input for prediction with valid feature names
+input_data = pd.DataFrame([[age, erc, nlr, blr, elr]], columns=['Age', 'ERC', 'NLR', 'BLR', 'ELR'])
+
+# Predict future EASI score
+predicted_easi = easi_model.predict(input_data)
+
+# Predict flare-up
+flare_prediction = flare_model.predict(input_data)
+flare_risk = "Yes" if flare_prediction[0] == 1 else "No"
+
+# Load models in the app
+easi_model = joblib.load('easi_prediction_model.pkl')
+flare_model = joblib.load('flare_prediction_model.pkl')
+
+# Input example
+import numpy as np
+sample_input = np.array([[0.25, 0.0875, 0.478778, 0.076923, 1.0]])  # Example normalized input
+
+# Predict
+predicted_easi = easi_model.predict(sample_input)
+predicted_flare = flare_model.predict(sample_input)
+
+print("Predicted EASI Score:", predicted_easi[0])
+print("Predicted Flare-Up:", "Yes" if predicted_flare[0] == 1 else "No")
