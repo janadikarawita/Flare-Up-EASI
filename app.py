@@ -22,13 +22,16 @@ if st.button("Predict"):
     # Prepare input for prediction
     input_data = np.array([[age, erc, nlr, blr, elr]])
 
-    # Predict future EASI score
-    predicted_easi = easi_model.predict(input_data)
+    try:
+        # Predict future EASI score
+        predicted_easi = easi_model.predict(input_data)
 
-    # Predict flare-up
-    flare_prediction = flare_model.predict(input_data)
-    flare_risk = "Yes" if flare_prediction[0] == 1 else "No"
+        # Predict flare-up
+        flare_prediction = flare_model.predict(input_data)
+        flare_risk = "Yes" if flare_prediction[0] == 1 else "No"
 
-    # Display results
-    st.write(f"Predicted Future EASI Score: {predicted_easi[0]:.2f}")
-    st.write(f"Future Flare-Up Risk: {flare_risk}")
+        # Display results
+        st.write(f"Predicted Future EASI Score: {predicted_easi[0]:.2f}")
+        st.write(f"Future Flare-Up Risk: {flare_risk}")
+    except ValueError as e:
+        st.error(f"An error occurred during prediction: {e}")
