@@ -117,3 +117,4 @@ if st.button("Predict"):
     
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
 
+
