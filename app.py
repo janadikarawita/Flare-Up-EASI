@@ -18,51 +18,61 @@ with st.sidebar:
     st.markdown("1️⃣ **Enter ERC (Eosinophil Relative Count)** from blood test.")
     st.markdown("2️⃣ **Enter ELR (Eosinophil-to-Lymphocyte Ratio).**")
     st.markdown("3️⃣ **Click Predict** to see the results.")
-    
     dark_mode = st.checkbox("🌙 Dark Mode")
 
-# Background gradient and moving auroras with CSS
+# Custom CSS for background gradient and animations
 background_css = """
 <style>
-body {
-    background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de);
-    animation: gradientMove 10s ease infinite;
-    transition: background 0.5s;
-}
-@keyframes gradientMove {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-.title-text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 3rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
-    text-align: center;
-    animation: glow 1.5s infinite alternate;
-}
-@keyframes glow {
-    from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); }
-    to { text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.8); }
-}
-.small-text {
-    color: black;
-    font-size: 1rem;
-}
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de);
+        animation: gradientMove 10s ease infinite;
+        z-index: -1;
+    }
+    @keyframes gradientMove {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
+    .title-text {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+        text-align: center;
+        animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+        from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6); }
+        to { text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.8); }
+    }
+    .small-text {
+        color: black;
+        font-size: 1rem;
+    }
+    .circular-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
 </style>
 """
 st.markdown(background_css, unsafe_allow_html=True)
+st.markdown("<div class='background'></div>", unsafe_allow_html=True)
 
 # Load and display logos
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
-    logo1 = Image.open("logo.png.png").resize((30, 30))
-    st.image(logo1)
+    logo1 = Image.open("logo.png.png").resize((40, 40))
+    st.image(logo1, use_column_width=False, output_format="PNG")
 with col3:
-    logo2 = Image.open("tsmu_logo.png.png").resize((30, 30))
-    st.image(logo2)
+    logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
+    st.image(logo2, use_column_width=False, output_format="PNG")
 
 # Title with animated effects
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
@@ -85,13 +95,34 @@ if st.button("Predict"):
         st.markdown("""<h3 style='color:red; text-align:center;'>🔥 Future Flare-Up Risk: Yes</h3>""", unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
     else:
-        st.balloons()
+        st.markdown(
+            """
+            <script>
+                function confettiEffect() {
+                    const duration = 5 * 1000;
+                    const animationEnd = Date.now() + duration;
+                    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+                    
+                    function randomInRange(min, max) {
+                        return Math.random() * (max - min) + min;
+                    }
+                    
+                    const interval = setInterval(function() {
+                        const timeLeft = animationEnd - Date.now();
+                        if (timeLeft <= 0) {
+                            return clearInterval(interval);
+                        }
+                        const particleCount = 50 * (timeLeft / duration);
+                        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 } }));
+                    }, 250);
+                }
+                confettiEffect();
+            </script>
+            """,
+            unsafe_allow_html=True,
+        )
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
-    # Animated progress bar for EASI Score
-    progress_bar = st.progress(0)
-    for percent in range(0, int(easi_score) + 1, 2):
-        time.sleep(0.05)
-        progress_bar.progress(percent / 100)
-    
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
+
+
