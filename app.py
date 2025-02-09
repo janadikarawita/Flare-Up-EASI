@@ -19,12 +19,12 @@ with st.sidebar:
     st.markdown("3️⃣ **Click Predict** to see the results.")
     dark_mode = st.checkbox("🌙 Dark Mode")
 
-# Custom CSS for background gradient and improved layout
+# Custom CSS for background color and improved layout
 st.markdown(
     """
     <style>
         [data-testid="stAppViewContainer"] > .main {
-            background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de) !important;
+            background: #f6f0ff !important;
             background-attachment: fixed !important;
         }
         .title-text {
@@ -70,10 +70,10 @@ st.markdown(
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
     logo1 = Image.open("logo.png.png").resize((40, 40))
-    st.image(logo1, use_container_width=False, output_format='PNG')
+    st.image(logo1, use_column_width=False, output_format='PNG')
 with col3:
     logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
-    st.image(logo2, use_container_width=False, output_format='PNG')
+    st.image(logo2, use_column_width=False, output_format='PNG')
 
 # Title
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
@@ -104,3 +104,4 @@ if st.button("Predict", key="predict", help="Click to predict", args=(erc, elr))
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
+
