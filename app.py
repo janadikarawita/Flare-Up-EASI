@@ -24,19 +24,20 @@ st.markdown(
     """
     <style>
         [data-testid="stAppViewContainer"] > .main {
-            background: #f6f0ff !important;
+            background-color: #f6f0ff !important;
             background-attachment: fixed !important;
         }
         .title-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 3rem;
             font-weight: bold;
-            color: #333;
+            color: white;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
             text-align: center;
         }
         .small-text {
-            color: black !important;
+            font-weight: bold;
+            color: white !important;
             font-size: 1rem;
         }
         .circular-img {
@@ -72,10 +73,10 @@ st.markdown(
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
     logo1 = Image.open("logo.png.png").resize((40, 40))
-    st.image(logo1, use_column_width=False, output_format='PNG')
+    st.image(logo1, use_container_width=True, output_format='PNG')
 with col3:
     logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
-    st.image(logo2, use_column_width=False, output_format='PNG')
+    st.image(logo2, use_container_width=True, output_format='PNG')
 
 # Title
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
@@ -100,11 +101,10 @@ if st.button("Predict", key="predict", help="Click to predict"):
         
         # Display fire animation with "This is Fine" dog meme
         fire_gif = "https://media.tenor.com/7N8FsLxyxFIAAAAd/this-is-fine.gif"
-        st.image(fire_gif, caption="This is fine", use_column_width=True)
+        st.image(fire_gif, caption="This is fine", use_container_width=True)
     else:
         st.balloons()
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
     st.markdown(f"""<h2 style='color:#333; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
-
 
