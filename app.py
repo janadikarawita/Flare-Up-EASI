@@ -36,8 +36,9 @@ st.markdown(
             text-align: center;
         }
         .small-text {
-            color: black !important;
+            color: white !important;
             font-size: 1rem;
+            font-weight: bold;
         }
         .circular-img {
             width: 40px;
@@ -70,10 +71,10 @@ st.markdown(
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
     logo1 = Image.open("logo.png.png").resize((40, 40))
-    st.image(logo1, use_column_width=False, output_format='PNG')
+    st.image(logo1, use_container_width=False, output_format='PNG')
 with col3:
     logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
-    st.image(logo2, use_column_width=False, output_format='PNG')
+    st.image(logo2, use_container_width=False, output_format='PNG')
 
 # Title
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
