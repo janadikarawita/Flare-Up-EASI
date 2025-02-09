@@ -36,7 +36,7 @@ st.markdown(
             text-align: center;
         }
         .small-text {
-            color: white !important;
+            color: black !important;
             font-size: 1rem;
         }
         .circular-img {
@@ -44,10 +44,22 @@ st.markdown(
             height: 40px;
             border-radius: 50%;
         }
-        .fire-animation {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
+        .predict-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .predict-button:hover {
+            background: linear-gradient(90deg, #2575fc, #6a11cb);
+            transform: scale(1.05);
         }
     </style>
     """,
@@ -58,10 +70,10 @@ st.markdown(
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
     logo1 = Image.open("logo.png.png").resize((40, 40))
-    st.image(logo1, use_container_width=False, output_format='PNG')
+    st.image(logo1, use_column_width=False, output_format='PNG')
 with col3:
     logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
-    st.image(logo2, use_container_width=False, output_format='PNG')
+    st.image(logo2, use_column_width=False, output_format='PNG')
 
 # Title
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
@@ -73,7 +85,7 @@ st.markdown("### <span class='small-text'>Eosinophil-to-Lymphocyte Ratio (ELR, R
 elr = st.number_input("", min_value=0.0, max_value=10.0, step=0.01, key="elr")
 
 # Predict button
-if st.button("Predict"):
+if st.button("Predict", key="predict", help="Click to predict", args=(erc, elr)):
     with st.spinner("Processing..."):
         time.sleep(2)
         easi_score = easi_model.predict(np.array([[erc, elr]]))[0]
@@ -85,13 +97,8 @@ if st.button("Predict"):
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
         
         # Display fire animation with "This is Fine" dog meme
-        fire_gif = "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif"
-        dog_meme = "https://media.tenor.com/images/3a3c9b2e83547437f818a8e3cf626a7e/tenor.gif"
-        st.markdown(f"""
-            <div class='fire-animation'>
-                <img src='{dog_meme}' width='200' />
-            </div>
-        """, unsafe_allow_html=True)
+        fire_gif = "https://media.tenor.com/7N8FsLxyxFIAAAAd/this-is-fine.gif"
+        st.image(fire_gif, caption="This is fine", use_column_width=False, output_format='GIF')
     else:
         st.balloons()
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
