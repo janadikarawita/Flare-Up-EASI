@@ -19,41 +19,36 @@ with st.sidebar:
     st.markdown("3️⃣ **Click Predict** to see the results.")
     dark_mode = st.checkbox("🌙 Dark Mode")
 
-# Define background gradient based on mode
-if dark_mode:
-    background_style = "background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);"
-else:
-    background_style = "background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de);"
-
-# Custom CSS for background and improved layout
+# Custom CSS for background gradient and improved layout
 st.markdown(
-    f"""
+    """
     <style>
-        body {{
-            {background_style}
-            background-attachment: fixed;
-            background-size: cover;
-        }}
-        [data-testid="stAppViewContainer"] > .main {{
-            {background_style}
-        }}
-        .title-text {{
+        [data-testid="stAppViewContainer"] > .main {
+            background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de) !important;
+            background-attachment: fixed !important;
+        }
+        .title-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 3rem;
             font-weight: bold;
             color: white;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
             text-align: center;
-        }}
-        .small-text {{
+        }
+        .small-text {
             color: black !important;
             font-size: 1rem;
-        }}
-        .circular-img {{
+        }
+        .circular-img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-        }}
+        }
+        .fire-animation {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -88,11 +83,17 @@ if st.button("Predict"):
     if flare_risk:
         st.markdown("""<h3 style='color:red; text-align:center;'>🔥 Future Flare-Up Risk: Yes</h3>""", unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
+        
+        # Display fire animation
+        fire_gif = "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif"
+        st.markdown(f"""
+            <div class='fire-animation'>
+                <img src='{fire_gif}' width='150' />
+            </div>
+        """, unsafe_allow_html=True)
     else:
         st.balloons()
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
-
-
 
