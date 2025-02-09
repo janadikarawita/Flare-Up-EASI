@@ -31,7 +31,7 @@ st.markdown(
         }
         .title-text {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
+            font-size: 3 rem;
             font-weight: bold;
             color: #333;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
