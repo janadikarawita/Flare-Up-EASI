@@ -72,11 +72,12 @@ st.markdown(
 # Load and display logos
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
-    logo1 = Image.open("logo.png.png").resize((10, 10))
-    st.image(logo1, use_container_width=True, output_format='PNG')
+    logo1 = Image.open("logo.png.png").convert("RGBA")
+    st.image(logo1, width=60, output_format='PNG')
 with col3:
-    logo2 = Image.open("tsmu_logo.png.png").resize((10, 10))
-    st.image(logo2, use_container_width=True, output_format='PNG')
+    logo2 = Image.open("tsmu_logo.png.png").convert("RGBA")
+    st.image(logo2, width=60, output_format='PNG')
+
 
 # Title
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
