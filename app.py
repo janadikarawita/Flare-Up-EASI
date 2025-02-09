@@ -19,11 +19,11 @@ with st.sidebar:
     st.markdown("3️⃣ **Click Predict** to see the results.")
     dark_mode = st.checkbox("🌙 Dark Mode")
 
-# Custom CSS for background gradient
+# Custom CSS for background gradient and improved layout
 st.markdown(
     """
     <style>
-        body {
+        [data-testid="stAppViewContainer"] > .main {
             background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de) !important;
             background-attachment: fixed !important;
         }
@@ -36,7 +36,7 @@ st.markdown(
             text-align: center;
         }
         .small-text {
-            color: black;
+            color: black !important;
             font-size: 1rem;
         }
         .circular-img {
