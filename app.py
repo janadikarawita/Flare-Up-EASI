@@ -23,20 +23,9 @@ with st.sidebar:
 # Custom CSS for background gradient and animations
 background_css = """
 <style>
-    .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de);
-        animation: gradientMove 10s ease infinite;
-        z-index: -1;
-    }
-    @keyframes gradientMove {
-        0% {background-position: 0% 50%;}
-        50% {background-position: 100% 50%;}
-        100% {background-position: 0% 50%;}
+    body {
+        background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de) !important;
+        background-attachment: fixed;
     }
     .title-text {
         font-family: 'Montserrat', sans-serif;
@@ -63,30 +52,29 @@ background_css = """
 </style>
 """
 st.markdown(background_css, unsafe_allow_html=True)
-st.markdown("<div class='background'></div>", unsafe_allow_html=True)
 
 # Load and display logos
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
     logo1 = Image.open("logo.png.png").resize((40, 40))
-    st.image(logo1, use_column_width=False, output_format="PNG")
+    st.image(logo1, use_container_width=False)
 with col3:
     logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
-    st.image(logo2, use_column_width=False, output_format="PNG")
+    st.image(logo2, use_container_width=False)
 
 # Title with animated effects
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
 
-# Input fields with hover animations
+# Input fields
 st.markdown("### <span class='small-text'>Eosinophil Relative Count (ERC, Raw %):</span>", unsafe_allow_html=True)
 erc = st.number_input("", min_value=0.0, max_value=100.0, step=0.01, key="erc")
 st.markdown("### <span class='small-text'>Eosinophil-to-Lymphocyte Ratio (ELR, Raw):</span>", unsafe_allow_html=True)
 elr = st.number_input("", min_value=0.0, max_value=10.0, step=0.01, key="elr")
 
-# Predict button with animations
+# Predict button
 if st.button("Predict"):
     with st.spinner("Processing..."):
-        time.sleep(2)  # Simulating processing time
+        time.sleep(2)
         easi_score = easi_model.predict(np.array([[erc, elr]]))[0]
         flare_risk = flare_model.predict(np.array([[erc, elr]]))[0]
     
@@ -95,8 +83,7 @@ if st.button("Predict"):
         st.markdown("""<h3 style='color:red; text-align:center;'>🔥 Future Flare-Up Risk: Yes</h3>""", unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
     else:
-        st.markdown(
-            """
+        st.markdown("""
             <script>
                 function confettiEffect() {
                     const duration = 5 * 1000;
@@ -118,11 +105,10 @@ if st.button("Predict"):
                 }
                 confettiEffect();
             </script>
-            """,
-            unsafe_allow_html=True,
-        )
+        """, unsafe_allow_html=True)
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
+
 
 
