@@ -36,11 +36,11 @@ st.markdown("""
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
         .stApp {
-            background: linear-gradient(to bottom, #1E2A38, #10141C);
-            font-family: 'Montserrat', sans-serif;
-            animation: backgroundMove 10s infinite alternate;
+            background: linear-gradient(270deg, #c0d8fc, #a3b8f0, #92a7e4, #7e91d5);
+            background-size: 400% 400%;
+            animation: auroraMove 10s infinite alternate;
         }
-        @keyframes backgroundMove {
+        @keyframes auroraMove {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
         }
@@ -65,6 +65,7 @@ st.markdown("""
         }
         .logo {
             width: 100px;
+            height: 100px;
             border-radius: 50%;
         }
         div.stButton > button {
@@ -163,3 +164,4 @@ if st.button("Predict", key="predict_button"):
             st.toast("High risk detected! ❄️")
     else:
         st.error("Model loading failed. Please check the model files and try again.")
+
