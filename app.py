@@ -72,10 +72,10 @@ st.markdown(
 # Load and display logos
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
-    logo1 = Image.open("logo.png.png").resize((40, 40))
+    logo1 = Image.open("logo.png.png").resize((10, 10))
     st.image(logo1, use_container_width=True, output_format='PNG')
 with col3:
-    logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
+    logo2 = Image.open("tsmu_logo.png.png").resize((10, 10))
     st.image(logo2, use_container_width=True, output_format='PNG')
 
 # Title
