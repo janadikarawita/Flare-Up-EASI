@@ -100,7 +100,7 @@ if st.button("Predict", key="predict", help="Click to predict"):
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
     else:
         st.balloons()
-        st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
+        st.markdown("""<h3 style='color:white; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
-    st.markdown(f"""<h2 style='color:#333; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
+    st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
 
