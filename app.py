@@ -23,9 +23,15 @@ with st.sidebar:
 # Custom CSS for background gradient and animations
 background_css = """
 <style>
-    body {
-        background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de) !important;
+    .main-container {
+        background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de);
         background-attachment: fixed;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
     }
     .title-text {
         font-family: 'Montserrat', sans-serif;
@@ -50,6 +56,7 @@ background_css = """
         border-radius: 50%;
     }
 </style>
+<div class='main-container'></div>
 """
 st.markdown(background_css, unsafe_allow_html=True)
 
@@ -109,6 +116,4 @@ if st.button("Predict"):
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
-
-
 
