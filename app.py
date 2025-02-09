@@ -24,7 +24,7 @@ st.markdown(
     """
     <style>
         [data-testid="stAppViewContainer"] > .main {
-            background: #f6f0ff !important;
+           background-color: #f6f0ff !important;
             background-attachment: fixed !important;
         }
         .title-text {
@@ -98,8 +98,8 @@ if st.button("Predict", key="predict", help="Click to predict", args=(erc, elr))
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
         
         # Display fire animation with "This is Fine" dog meme
-        fire_gif = "https://media.tenor.com/7N8FsLxyxFIAAAAd/this-is-fine.gif"
-        st.image(fire_gif, caption="This is fine", use_column_width=False, output_format='GIF')
+        fire_gif = "https://tenor.com/view/this-is-fine-fire-house-burning-okay-gif-5263684"
+        st.image(fire_gif, caption="This is not fine", use_container_width=False, output_format='GIF')
     else:
         st.balloons()
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
