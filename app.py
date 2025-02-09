@@ -34,30 +34,30 @@ st.markdown(
             font-size: 3 rem;
             font-weight: bold;
             color: #333;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            text-shadow: 2 px 2 px 5 px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
         .small-text {
             color: black !important;
-            font-size: 1rem;
+            font-size: 1 rem;
         }
         .circular-img {
-            width: 40px;
-            height: 40px;
+            width: 40 px;
+            height: 40 px;
             border-radius: 50%;
         }
         .predict-button {
             display: block;
             width: 100%;
-            padding: 12px;
-            font-size: 1.2rem;
+            padding: 12 px;
+            font-size: 1.2 rem;
             font-weight: bold;
             color: white;
             text-align: center;
             background: linear-gradient(90deg, #6a11cb, #2575fc);
-            border-radius: 8px;
+            border-radius: 8 px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.3 s;
         }
         .predict-button:hover {
             background: linear-gradient(90deg, #2575fc, #6a11cb);
