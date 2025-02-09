@@ -22,23 +22,24 @@ with st.sidebar:
 # Custom CSS for background color and improved layout
 st.markdown(
     """
+    st.markdown(
+    """
     <style>
-        [data-testid="stAppViewContainer"] > .main {
-           background-color: #f6f0ff !important;
-            background-attachment: fixed !important;
+        [data-testid="stAppViewContainer"] {
+            background-color: #f6f0ff !important;
+            background-attachment: fixed;
         }
         .title-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 3rem;
             font-weight: bold;
-            color: white;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+            color: #333;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
         .small-text {
-            color: white !important;
+            color: black !important;
             font-size: 1rem;
-            font-weight: bold;
         }
         .circular-img {
             width: 40px;
@@ -66,7 +67,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
 # Load and display logos
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
@@ -98,8 +98,9 @@ if st.button("Predict", key="predict", help="Click to predict", args=(erc, elr))
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
         
         # Display fire animation with "This is Fine" dog meme
-        fire_gif = "https://tenor.com/view/this-is-fine-fire-house-burning-okay-gif-5263684"
-        st.image(fire_gif, caption="This is not fine", use_container_width=False, output_format='GIF')
+        fire_gif_url = "https://media.tenor.com/7N8FsLxyxFIAAAAd/this-is-fine.gif"
+        st.image(fire_gif_url, use_container_width=True)
+
     else:
         st.balloons()
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
