@@ -36,7 +36,7 @@ st.markdown("""
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
         .stApp {
-            background: linear-gradient(270deg, #c0d8fc, #a3b8f0, #92a7e4, #7e91d5);
+            background: linear-gradient(270deg, ##615ed4, ##3e74d8, ##99b3fc, ##dfc2fc);
             background-size: 400% 400%;
             animation: auroraMove 10s infinite alternate;
         }
@@ -64,8 +64,8 @@ st.markdown("""
             padding: 10px;
         }
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
         div.stButton > button {
@@ -119,9 +119,9 @@ st.markdown("""
 # 💼 **Logo Placement**
 col1, col2 = st.columns([1, 1])
 with col1:
-    st.image("logo.png.png", width=100, use_column_width=False)
+    st.image("logo.png.png", width=10, use_column_width=False)
 with col2:
-    st.image("tsmu_logo.png.png", width=100, use_column_width=False)
+    st.image("tsmu_logo.png.png", width=10, use_column_width=False)
 
 st.markdown("<h1 class='title glow'>EASI Score & Flare-Up Prediction Tool</h1>", unsafe_allow_html=True)
 
