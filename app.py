@@ -1,167 +1,78 @@
 import streamlit as st
 import joblib
 import numpy as np
-import subprocess
+from PIL import Image
 import time
 
-# Ensure required dependencies are installed
-required_packages = ["micropip"]
-for package in required_packages:
-    try:
-        __import__(package)
-    except ModuleNotFoundError:
-        subprocess.check_call(["pip", "install", package])
+# Load models
+easi_model = joblib.load("easi_prediction_model.pkl")
+flare_model = joblib.load("flare_prediction_model.pkl")
 
-# Load the trained models safely
-def load_model(model_path):
-    try:
-        return joblib.load(model_path)
-    except FileNotFoundError:
-        st.error(f"Error: {model_path} not found. Please ensure the model file is uploaded.")
-        return None
+# Set page config
+st.set_page_config(page_title="EASI Score & Flare-Up Prediction Tool", layout="wide")
 
-easi_model = load_model("easi_prediction_model.pkl")
-flare_model = load_model("flare_prediction_model.pkl")
-
-# 🌟 Page Config (Title & Theme)
-st.set_page_config(
-    page_title="EASI Score & Flare-Up Predictor",
-    layout="centered",
-    initial_sidebar_state="expanded",
+# Background gradient and moving auroras with CSS
+st.markdown(
+    """
+    <style>
+    body {
+        background: linear-gradient(135deg, #dfc2fc, #5f5ed4, #4993de);
+        animation: gradientMove 10s ease infinite;
+    }
+    @keyframes gradientMove {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
+    .title-text {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+        text-align: center;
+    }
+    .small-text {
+        color: black;
+        font-size: 1rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
-# 🎭 Custom Styling
-st.markdown("""
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
-
-        .stApp {
-            background: linear-gradient(270deg, ##615ed4, ##3e74d8, ##99b3fc, ##dfc2fc);
-            background-size: 400% 400%;
-            animation: auroraMove 10s infinite alternate;
-        }
-        @keyframes auroraMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        .title {
-            text-align: center;
-            font-size: 42px;
-            font-weight: bold;
-            font-style: italic;
-            color: #ffffff;
-            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.7);
-        }
-        .subtext {
-            text-align: center;
-            font-size: 18px;
-            color: black;
-        }
-        .logo-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-        }
-        .logo {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-        div.stButton > button {
-            width: 100%;
-            border-radius: 10px;
-            background: linear-gradient(to right, #6A11CB, #2575FC);
-            color: white;
-            font-size: 18px;
-            padding: 10px;
-            transition: 0.3s;
-        }
-        div.stButton > button:hover {
-            background: linear-gradient(to right, #2575FC, #6A11CB);
-            transform: scale(1.05);
-        }
-        .result-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            backdrop-filter: blur(10px);
-            animation: fadeInScale 1s;
-        }
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        .result-text {
-            font-size: 22px;
-            font-weight: bold;
-            color: black;
-        }
-        .flare-no {
-            color: #28a745;
-        }
-        .flare-yes {
-            color: #dc3545;
-            animation: flicker 1s infinite alternate;
-        }
-        @keyframes flicker {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
-        .glow {
-            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# 💼 **Logo Placement**
-col1, col2 = st.columns([1, 1])
+# Load and display logos
+col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
-    st.image("logo.png.png", width=10, use_column_width=False)
-with col2:
-    st.image("tsmu_logo.png.png", width=10, use_column_width=False)
+    logo1 = Image.open("logo.png.png").resize((50, 50))
+    st.image(logo1)
+with col3:
+    logo2 = Image.open("tsmu_logo.png.png").resize((50, 50))
+    st.image(logo2)
 
-st.markdown("<h1 class='title glow'>EASI Score & Flare-Up Prediction Tool</h1>", unsafe_allow_html=True)
+# Title
+st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
 
-st.markdown("<p class='subtext'>Predict future EASI scores and flare-ups based on ERC and ELR values.</p>", unsafe_allow_html=True)
-st.write("---")
+# Input fields
+st.markdown("### Eosinophil Relative Count (ERC, Raw %):", unsafe_allow_html=True)
+erc = st.number_input("", min_value=0.0, max_value=100.0, step=0.01, key="erc")
+st.markdown("### Eosinophil-to-Lymphocyte Ratio (ELR, Raw):", unsafe_allow_html=True)
+elr = st.number_input("", min_value=0.0, max_value=10.0, step=0.01, key="elr")
 
-# 👤 Sidebar Instructions
-with st.sidebar:
-    st.header("How to Use:")
-    st.write("1️⃣ Enter ERC (Eosinophil Relative Count) from blood test.")
-    st.write("2️⃣ Enter ELR (Eosinophil-to-Lymphocyte Ratio).")
-    st.write("3️⃣ Click **Predict** to see the results.")
-
-# 💯 Input Fields
-erc = st.number_input("Eosinophil Relative Count (ERC, Raw %):", min_value=0.0, max_value=50.0, step=0.1, format="%.2f", key="erc_input", help="Enter raw ERC value from blood test.")
-elr = st.number_input("Eosinophil-to-Lymphocyte Ratio (ELR, Raw):", min_value=0.0, max_value=5.0, step=0.01, format="%.2f", key="elr_input", help="Enter calculated ELR value.")
-
-# 🚀 Prediction Logic
-if st.button("Predict", key="predict_button"):
-    if easi_model is not None and flare_model is not None:
-        input_data = np.array([[erc, elr]])
-        easi_score = easi_model.predict(input_data)[0]
-        flare_risk = flare_model.predict(input_data)[0]
-        flare_risk_text = "Yes" if flare_risk == 1 else "No"
-        flare_risk_class = "flare-yes" if flare_risk == 1 else "flare-no"
-
-        # 💪 Display Results in a Card
-        st.markdown(f"""
-            <div class='result-card'>
-                <p class='result-text'>Predicted Future EASI Score: {easi_score:.2f}</p>
-                <p class='result-text {flare_risk_class}'>Future Flare-Up Risk: {flare_risk_text}</p>
-            </div>
-        """, unsafe_allow_html=True)
-
-        if flare_risk == 0:
-            st.balloons()
-            st.toast("Low risk! 🎉")
-        else:
-            st.snow()
-            st.toast("High risk detected! ❄️")
+# Predict button with animations
+if st.button("Predict"):
+    with st.spinner("Processing..."):
+        time.sleep(2)  # Simulating processing time
+        easi_score = easi_model.predict(np.array([[erc, elr]]))[0]
+        flare_risk = flare_model.predict(np.array([[erc, elr]]))[0]
+    
+    # Show confetti animation if flare-up risk is high
+    if flare_risk:
+        st.balloons()
+        st.markdown("<h3 style='color:red; text-align:center;'>Future Flare-Up Risk: Yes</h3>", unsafe_allow_html=True)
     else:
-        st.error("Model loading failed. Please check the model files and try again.")
+        st.markdown("<h3 style='color:green; text-align:center;'>Future Flare-Up Risk: No</h3>", unsafe_allow_html=True)
+    
+    st.markdown(f"<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>", unsafe_allow_html=True)
+
 
