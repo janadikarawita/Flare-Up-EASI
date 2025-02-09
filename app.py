@@ -98,10 +98,6 @@ if st.button("Predict", key="predict", help="Click to predict"):
     if flare_risk:
         st.markdown("""<h3 style='color:red; text-align:center;'>🔥 Future Flare-Up Risk: Yes</h3>""", unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
-        
-        # Display fire animation with "This is Fine" dog meme
-        fire_gif = "https://media.tenor.com/7N8FsLxyxFIAAAAd/this-is-fine.gif"
-        st.image(fire_gif, caption="This is fine", use_container_width=True)
     else:
         st.balloons()
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
