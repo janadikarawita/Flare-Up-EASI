@@ -87,5 +87,3 @@ if st.button("Predict"):
         st.markdown("<h3 style='color:green; text-align:center;'>Future Flare-Up Risk: No</h3>", unsafe_allow_html=True)
     
     st.markdown(f"<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>", unsafe_allow_html=True)
-
-
