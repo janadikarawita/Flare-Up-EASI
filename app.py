@@ -36,7 +36,7 @@ st.markdown(
             text-align: center;
         }
         .small-text {
-            color: black !important;
+            color: white !important;
             font-size: 1rem;
         }
         .circular-img {
@@ -58,10 +58,10 @@ st.markdown(
 col1, col2, col3 = st.columns([1, 3, 1])
 with col1:
     logo1 = Image.open("logo.png.png").resize((40, 40))
-    st.image(logo1, use_column_width=False)
+    st.image(logo1, use_column_width=False, output_format='PNG')
 with col3:
     logo2 = Image.open("tsmu_logo.png.png").resize((40, 40))
-    st.image(logo2, use_column_width=False)
+    st.image(logo2, use_column_width=False, output_format='PNG')
 
 # Title
 st.markdown('<div class="title-text">EASI Score & Flare-Up Prediction Tool</div>', unsafe_allow_html=True)
@@ -84,11 +84,12 @@ if st.button("Predict"):
         st.markdown("""<h3 style='color:red; text-align:center;'>🔥 Future Flare-Up Risk: Yes</h3>""", unsafe_allow_html=True)
         st.markdown("""<h3 style='text-align:center;'>⚠️ Please consult with a specialist.</h3>""", unsafe_allow_html=True)
         
-        # Display fire animation
+        # Display fire animation with "This is Fine" dog meme
         fire_gif = "https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif"
+        dog_meme = "https://media.tenor.com/images/3a3c9b2e83547437f818a8e3cf626a7e/tenor.gif"
         st.markdown(f"""
             <div class='fire-animation'>
-                <img src='{fire_gif}' width='150' />
+                <img src='{dog_meme}' width='200' />
             </div>
         """, unsafe_allow_html=True)
     else:
@@ -96,4 +97,3 @@ if st.button("Predict"):
         st.markdown("""<h3 style='color:green; text-align:center;'>🎉 Future Flare-Up Risk: No</h3>""", unsafe_allow_html=True)
     
     st.markdown(f"""<h2 style='color:white; text-align:center;'>Predicted Future EASI Score: {easi_score:.2f}</h2>""", unsafe_allow_html=True)
-
