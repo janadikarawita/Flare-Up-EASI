@@ -54,13 +54,13 @@ st.markdown(
             font-weight: bold;
             color: white;
             text-align: center;
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            background: linear-gradient(90 deg, #6a11cb, #2575fc);
             border-radius: 8 px;
             cursor: pointer;
             transition: 0.3 s;
         }
         .predict-button:hover {
-            background: linear-gradient(90deg, #2575fc, #6a11cb);
+            background: linear-gradient(90 deg, #2575fc, #6a11cb);
             transform: scale(1.05);
         }
     </style>
